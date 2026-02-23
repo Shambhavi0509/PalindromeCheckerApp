@@ -2,31 +2,27 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    // Recursive method to check palindrome
-    public static boolean isPalindromeRecursive(String str, int start, int end) {
-        if (start >= end) { // Base case: crossed or equal
-            return true;
-        }
-        if (str.charAt(start) != str.charAt(end)) { // Mismatch
-            return false;
-        }
-        return isPalindromeRecursive(str, start + 1, end - 1); // Recursive call
-    }
-
     public static void main(String[] args) {
 
         // ============================
-        // UC9: Recursive Palindrome Checker
+        // UC10: Case-Insensitive & Space-Ignored Palindrome
         // ============================
         Scanner sc = new Scanner(System.in);
-        System.out.println("--- UC9: Recursive Palindrome Checker ---");
-        System.out.print("Enter a string to check using recursion: ");
-        String inputUC9 = sc.nextLine();
+        System.out.println("--- UC10: Case-Insensitive & Space-Ignored Palindrome ---");
+        System.out.print("Enter a string to check ignoring spaces and case: ");
+        String inputUC10 = sc.nextLine();
 
-        if (isPalindromeRecursive(inputUC9, 0, inputUC9.length() - 1)) {
-            System.out.println("The string '" + inputUC9 + "' is a palindrome (Recursive check).");
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = inputUC10.replaceAll("\\s+", "").toLowerCase();
+
+        // Reverse normalized string
+        String reversed = new StringBuilder(normalized).reverse().toString();
+
+        // Compare
+        if (normalized.equals(reversed)) {
+            System.out.println("The string '" + inputUC10 + "' is a palindrome (Case & Space Ignored).");
         } else {
-            System.out.println("The string '" + inputUC9 + "' is NOT a palindrome (Recursive check).");
+            System.out.println("The string '" + inputUC10 + "' is NOT a palindrome (Case & Space Ignored).");
         }
 
         sc.close();
