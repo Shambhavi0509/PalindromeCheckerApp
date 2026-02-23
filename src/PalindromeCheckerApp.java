@@ -2,78 +2,31 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    // Node class for singly linked list
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+    // Recursive method to check palindrome
+    public static boolean isPalindromeRecursive(String str, int start, int end) {
+        if (start >= end) { // Base case: crossed or equal
+            return true;
         }
+        if (str.charAt(start) != str.charAt(end)) { // Mismatch
+            return false;
+        }
+        return isPalindromeRecursive(str, start + 1, end - 1); // Recursive call
     }
 
     public static void main(String[] args) {
 
         // ============================
-        // UC8: Linked List Based Palindrome Checker
+        // UC9: Recursive Palindrome Checker
         // ============================
         Scanner sc = new Scanner(System.in);
-        System.out.println("--- UC8: Linked List Based Palindrome Checker ---");
-        System.out.print("Enter a string to check using linked list: ");
-        String inputUC8 = sc.nextLine();
+        System.out.println("--- UC9: Recursive Palindrome Checker ---");
+        System.out.print("Enter a string to check using recursion: ");
+        String inputUC9 = sc.nextLine();
 
-        // Step 1: Convert string to linked list
-        Node head = null;
-        Node tail = null;
-        for (int i = 0; i < inputUC8.length(); i++) {
-            Node newNode = new Node(inputUC8.charAt(i));
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        // Step 2: Find middle using fast and slow pointer
-        Node slow = head;
-        Node fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Step 3: Reverse second half of the list
-        Node prev = null;
-        Node current = slow;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        Node secondHalfHead = prev;
-
-        // Step 4: Compare first half and reversed second half
-        Node firstHalfPointer = head;
-        Node secondHalfPointer = secondHalfHead;
-        boolean isPalindrome = true;
-        while (secondHalfPointer != null) {
-            if (firstHalfPointer.data != secondHalfPointer.data) {
-                isPalindrome = false;
-                break;
-            }
-            firstHalfPointer = firstHalfPointer.next;
-            secondHalfPointer = secondHalfPointer.next;
-        }
-
-        // Step 5: Output result
-        if (isPalindrome) {
-            System.out.println("The string '" + inputUC8 + "' is a palindrome (Linked List check).");
+        if (isPalindromeRecursive(inputUC9, 0, inputUC9.length() - 1)) {
+            System.out.println("The string '" + inputUC9 + "' is a palindrome (Recursive check).");
         } else {
-            System.out.println("The string '" + inputUC8 + "' is NOT a palindrome (Linked List check).");
+            System.out.println("The string '" + inputUC9 + "' is NOT a palindrome (Recursive check).");
         }
 
         sc.close();
