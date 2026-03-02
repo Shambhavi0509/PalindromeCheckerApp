@@ -1,28 +1,58 @@
 import java.util.Scanner;
+import java.util.Stack;
+
+// ============================
+// Palindrome Service Class (UC11)
+// ============================
+class PalindromeChecker {
+
+    // Encapsulated palindrome logic
+    public boolean checkPalindrome(String input) {
+
+        if (input == null) {
+            return false;
+        }
+
+        String normalized = input.toLowerCase();
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push all characters to stack
+        for (int i = 0; i < normalized.length(); i++) {
+            stack.push(normalized.charAt(i));
+        }
+
+        // Compare while popping
+        for (int i = 0; i < normalized.length(); i++) {
+            if (normalized.charAt(i) != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         // ============================
-        // UC10: Case-Insensitive & Space-Ignored Palindrome
+        // UC11: Object-Oriented Palindrome Service
         // ============================
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("--- UC10: Case-Insensitive & Space-Ignored Palindrome ---");
-        System.out.print("Enter a string to check ignoring spaces and case: ");
-        String inputUC10 = sc.nextLine();
+        System.out.println("--- UC11: Object-Oriented Palindrome Check ---");
+        System.out.print("Enter a string to check using OOPS method: ");
+        String inputUC11 = sc.nextLine();
 
-        // Normalize string: remove spaces and convert to lowercase
-        String normalized = inputUC10.replaceAll("\\s+", "").toLowerCase();
+        PalindromeChecker checker = new PalindromeChecker();
+        boolean result = checker.checkPalindrome(inputUC11);
 
-        // Reverse normalized string
-        String reversed = new StringBuilder(normalized).reverse().toString();
-
-        // Compare
-        if (normalized.equals(reversed)) {
-            System.out.println("The string '" + inputUC10 + "' is a palindrome (Case & Space Ignored).");
+        if (result) {
+            System.out.println("The string '" + inputUC11 + "' is a palindrome.");
         } else {
-            System.out.println("The string '" + inputUC10 + "' is NOT a palindrome (Case & Space Ignored).");
+            System.out.println("The string '" + inputUC11 + "' is NOT a palindrome.");
         }
 
         sc.close();
