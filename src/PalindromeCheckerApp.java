@@ -3,23 +3,12 @@ import java.util.Stack;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-// ============================
-// Palindrome Strategy Interface (UC12)
-// ============================
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+public class PalindromeCheckerApp {
 
-// ============================
-// Stack Strategy Implementation
-// ============================
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
-
-        if (input == null) {
-            return false;
-        }
+    // ============================
+    // Stack Method
+    // ============================
+    public static boolean checkUsingStack(String input) {
 
         String normalized = input.toLowerCase();
         Stack<Character> stack = new Stack<>();
@@ -36,18 +25,11 @@ class StackStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
 
-// ============================
-// Deque Strategy Implementation
-// ============================
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
-
-        if (input == null) {
-            return false;
-        }
+    // ============================
+    // Deque Method
+    // ============================
+    public static boolean checkUsingDeque(String input) {
 
         String normalized = input.toLowerCase();
         Deque<Character> deque = new ArrayDeque<>();
@@ -64,43 +46,36 @@ class DequeStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
-
-public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         // ============================
-        // UC12: Strategy Pattern for Palindrome Algorithms
+        // UC13: Performance Comparison
         // ============================
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("--- UC12: Strategy Pattern Palindrome Check ---");
+        System.out.println("--- UC13: Performance Comparison ---");
         System.out.print("Enter a string: ");
-        String inputUC12 = sc.nextLine();
+        String inputUC13 = sc.nextLine();
 
-        System.out.println("Choose Algorithm:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
-        System.out.print("Enter your choice (1 or 2): ");
+        // Stack timing
+        long startStack = System.nanoTime();
+        boolean stackResult = checkUsingStack(inputUC13);
+        long endStack = System.nanoTime();
+        long stackTime = endStack - startStack;
 
-        int choice = sc.nextInt();
+        // Deque timing
+        long startDeque = System.nanoTime();
+        boolean dequeResult = checkUsingDeque(inputUC13);
+        long endDeque = System.nanoTime();
+        long dequeTime = endDeque - startDeque;
 
-        PalindromeStrategy strategy;
+        System.out.println("\nResults:");
+        System.out.println("Stack Method: " + (stackResult ? "Palindrome" : "Not Palindrome"));
+        System.out.println("Execution Time (Stack): " + stackTime + " ns");
 
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
-
-        boolean result = strategy.checkPalindrome(inputUC12);
-
-        if (result) {
-            System.out.println("The string '" + inputUC12 + "' is a palindrome.");
-        } else {
-            System.out.println("The string '" + inputUC12 + "' is NOT a palindrome.");
-        }
+        System.out.println("\nDeque Method: " + (dequeResult ? "Palindrome" : "Not Palindrome"));
+        System.out.println("Execution Time (Deque): " + dequeTime + " ns");
 
         sc.close();
     }
